@@ -1,4 +1,5 @@
 import React from 'react';
+import Mission from '../Mission/Mission';
 
 function Home() {
     return (
@@ -7,6 +8,7 @@ function Home() {
             <button type="button" className="btn btn-success">
                 Success
             </button>
+            <Mission />
         </div>
     );
 }
