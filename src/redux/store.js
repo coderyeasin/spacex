@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './spacexSlice';
+import spaceReducer from './slices/spacexSlice';
 
 const store = configureStore({
-    reducer: { counterReducer },
+    reducer: { spaceReducer },
 });
 
 export default store;
