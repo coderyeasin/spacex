@@ -12,7 +12,12 @@ function Mission() {
 
     const mission = useSelector((state) => state.spaceReducer.launch);
     const launch = mission.slice(0, 9);
-    console.log(mission.map((e) => e.mission_name).slice(0, 9));
+
+    const failure = mission.map((e) => e.launch_failure_details).slice(0, 9);
+    const { reason } = failure;
+    console.log(reason);
+
+    console.log(mission.slice(0, 9));
     const handleRocket = (e) => {
         console.log(e.target.value);
     };
@@ -51,7 +56,7 @@ function Mission() {
 
             <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
                 {launch.map((rocket) => (
-                    <Rockets key={rocket.id} rocket={rocket} />
+                    <Rockets key={rocket.id} rocket={rocket} failure={failure} />
                 ))}
             </div>
         </div>
