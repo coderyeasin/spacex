@@ -12,6 +12,7 @@ export const spacexSlice = createSlice({
     name: 'spacex',
     initialState: {
         launch: [],
+        date: [],
         status: 'idle',
     },
     reducers: {},
@@ -28,6 +29,6 @@ export const spacexSlice = createSlice({
     },
 });
 
-// export const { add, remove } = counterSlice.actions;
+// export const { launchDate } = spacexSlice.actions;
 
 export default spacexSlice.reducer;
