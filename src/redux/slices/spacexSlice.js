@@ -11,10 +11,32 @@ export const spacexSlice = createSlice({
     name: 'spacex',
     initialState: {
         launch: [],
-        date: [],
+        recent: [],
         status: 'idle',
     },
-    reducers: {},
+    reducers: {
+        upcoming: (state, action) => {
+            console.log(typeof action.payload);
+            if (action.payload === String(true)) {
+                const recentStatus = state.launch.filter((e) => e.upcoming === true);
+
+                const hence = state;
+                hence.recent = recentStatus;
+            }
+            if (action.payload === String(false)) {
+                const recentStatus = state.launch.filter((e) => e.upcoming === false);
+
+                const hence = state;
+                hence.recent = recentStatus;
+            }
+            // const recentStatus = state.launch.filter((e) => e.upcoming === action.payload);
+
+            // const hence = state;
+            // hence.recent = recentStatus;
+
+            // console.log(recentStatus);
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchSpacex.fulfilled, (state, action) => {
             const spacex = state;
@@ -28,6 +50,6 @@ export const spacexSlice = createSlice({
     },
 });
 
-// export const { launchDate } = spacexSlice.actions;
+export const { upcoming } = spacexSlice.actions;
 
 export default spacexSlice.reducer;

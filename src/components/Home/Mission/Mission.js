@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSpacex } from '../../../redux/slices/spacexSlice';
+import { fetchSpacex, upcoming } from '../../../redux/slices/spacexSlice';
 import Rockets from './Rockets';
 
 function Mission() {
-    const [display, setDisplay] = useState([]);
+    // const [display, setDisplay] = useState([]);
     const [loading, setIsLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [pageCount] = useState(9);
@@ -15,10 +15,13 @@ function Mission() {
         dispatch(fetchSpacex());
         setIsLoading(false);
     }, [dispatch, page]);
+    let mission;
+    mission = useSelector((state) => state.spaceReducer.launch);
+    mission = useSelector((state) => state.spaceReducer.recent);
+    // console.log(recentStatus);
 
-    const mission = useSelector((state) => state.spaceReducer.launch);
-    const launch = mission.slice(0, 9);
-    console.log(launch);
+    // const launch = mission.slice(0, 9);
+    // console.log(launch);
 
     // Search Implement
     const handleRocket = (e) => {
@@ -26,27 +29,27 @@ function Mission() {
         const search = mission.filter((name) =>
             name.rocket.rocket_name.toLowerCase().includes(searchText.toLowerCase())
         );
-        setDisplay(search);
+        // setDisplay(search);
         setPage(search);
         console.log(search);
     };
-    console.log(display);
+    // console.log(display);
 
     // Filtering
 
     // upcoming
     const handleLatest = (e) => {
         console.log(e.target.value);
-        const recent = mission.map((item) => item.upcoming === e.target.value);
-        // setPage(recent);
-        setDisplay(recent);
-        console.log(recent);
+        dispatch(upcoming(e.target.value));
+        // setDisplay(recentStatus);
+        // setPage(recentStatus);
     };
+
     // launch Date
     const lastYear = (e) => {
         const years = e.target.value;
         const preYear = mission.map((item) => item?.launch_year === years);
-        setDisplay(preYear);
+        // setDisplay(preYear);
         console.log(preYear);
     };
     // Status
@@ -54,7 +57,7 @@ function Mission() {
         console.log(e.target.value);
         const recent = mission.map((item) => item?.upcoming === e.target.value);
         // setPage(recent);
-        setDisplay(recent);
+        // setDisplay(recent);
         console.log(recent);
     };
     // Get Current Posts
@@ -83,11 +86,12 @@ function Mission() {
                     aria-label="Search"
                 />
             </form>
-            {display && <p>Search Result by Name : {display.length}</p>}
+            {/* {display && <p>Search Result by Name : {display.length}</p>} */}
             <div className="my-3 d-flex justify-content-between align-items-center my-5">
                 <select name="" id="" onClick={handleLatest}>
                     <option value="Select">Select</option>
-                    <option value="Upcoming">Upcoming</option>
+                    <option value="true">Upcoming</option>
+                    <option value="false">No</option>
                 </select>
                 <select name="" id="" value="Launch Date" onChange={lastYear}>
                     <option value="Launch Date">Launch Date</option>
@@ -108,13 +112,15 @@ function Mission() {
             )}
             {!loading && (
                 <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
-                    {!page
-                        ? display.map((rocket) => (
-                              <Rockets key={rocket.flight_number} rocket={rocket} />
-                          ))
-                        : currentPost.map((rocket) => (
-                              <Rockets key={rocket.flight_number} rocket={rocket} />
-                          ))}
+                    {
+                        // ? display.map((rocket) => (
+                        //       <Rockets key={rocket.flight_number} rocket={rocket} />
+                        //   ))
+                        // :
+                        currentPost.map((rocket) => (
+                            <Rockets key={rocket.flight_number} rocket={rocket} />
+                        ))
+                    }
                 </div>
             )}
 
