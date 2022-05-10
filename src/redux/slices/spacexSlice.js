@@ -4,7 +4,6 @@ export const fetchSpacex = createAsyncThunk('space/fetchSpacex', async () => {
     const response = await fetch('https://api.spacexdata.com/v3/launches').then((res) =>
         res.json()
     );
-    console.log(response);
     return response;
 });
 

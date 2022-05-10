@@ -9,9 +9,10 @@ function Mission() {
     const [pageCount] = useState(9);
     const dispatch = useDispatch();
 
+    // data load
     useEffect(() => {
         dispatch(fetchSpacex());
-    }, [dispatch, display]);
+    }, [dispatch]);
 
     const mission = useSelector((state) => state.spaceReducer.launch);
     const launch = mission.slice(0, 9);
@@ -33,17 +34,17 @@ function Mission() {
     // upcoming
 
     // launch Date
-    const lastYear = () => {
-        // const preYear = e.target.value;
-        const launchYear = mission.filter((name) => name.launch_year);
-        console.log(launchYear);
+    const lastYear = (e) => {
+        const preYear = e.target.value;
+        // const filterYear = mission.filter((name) => name.launch_year);
+        console.log(preYear);
     };
     // Status
 
     // Get Current Posts
     const indexOfLastPost = page * pageCount;
     const indexOfFirstPost = indexOfLastPost - pageCount;
-    const currentPost = mission.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPost = mission.slice(indexOfFirstPost, indexOfLastPost).reverse();
 
     // pagination
     const pageNumbers = [];
@@ -73,20 +74,21 @@ function Mission() {
                     <option value="Upcoming">Upcoming</option>
                 </select>
                 <select name="" id="" value="Launch Date" onChange={lastYear}>
-                    <option value="Upcoming">Last Week</option>
+                    <option value="Launch Date">Launch Date</option>
+                    <option value="Last Week">Last Week</option>
                     <option value="Last Month">Last Month</option>
                     <option value="Last Year">Last Year</option>
                 </select>
                 <select name="" id="">
                     <option value="Select">Status</option>
-                    <option value="Upcoming">Failure</option>
+                    <option value="Failure">Failure</option>
                     <option value="Success">Success</option>
                 </select>
             </div>
 
             <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
                 {currentPost.map((rocket) => (
-                    <Rockets key={rocket.mission_id} rocket={rocket} />
+                    <Rockets key={rocket.id} rocket={rocket} />
                 ))}
             </div>
 
