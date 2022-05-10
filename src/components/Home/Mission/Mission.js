@@ -33,9 +33,9 @@ function Mission() {
     // upcoming
 
     // launch Date
-    const lastYear = (e) => {
-        const preValue = e.target.value;
-        console.log(preValue);
+    const lastYear = () => {
+        const launchYear = mission.filter((name) => name.launch_year);
+        console.log(launchYear);
     };
     // Status
 
@@ -71,15 +71,16 @@ function Mission() {
                     <option value="Select">Select</option>
                     <option value="Upcoming">Upcoming</option>
                 </select>
-                <select name="" id="" value="Launch Date" onChange={lastYear}>
-                    <option value="Upcoming">Last Week</option>
-                    <option value="Select">Last Month</option>
-                    <option value="Select">Last Year</option>
+                <select name="" id="" value="Launch Date" onClick={lastYear}>
+                    <option value="Launch Date">Launch Date</option>
+                    <option value="Last Week">Last Week</option>
+                    <option value="Last Month">Last Month</option>
+                    <option value="Last Year">Last Year</option>
                 </select>
                 <select name="" id="">
                     <option value="Select">Status</option>
                     <option value="Upcoming">Failure</option>
-                    <option value="Select">Success</option>
+                    <option value="Success">Success</option>
                 </select>
             </div>
 

@@ -37,7 +37,7 @@ function Rockets({ rocket }) {
                         className="card-img-top img-fluid w-75 mx-auto"
                         alt="Rocket"
                     />
-                    <div className="card-body position-absolute left-0 right-0 bottom-0 top-2 bg-light opacity-75 d-flex justify-content-between gap-2">
+                    <div className="card-body position-absolute left-0 right-0 bottom-10 top-2 bg-light opacity-75 d-flex justify-content-between gap-2">
                         <div className="rocket_con w-50">
                             <h5 className="text-primary">Name: {rocketName?.rocket_name}</h5>
                             <span>{rocketName?.rocket_type}</span> <br />
@@ -56,7 +56,7 @@ function Rockets({ rocket }) {
                             <span>Status: {Boolean(rocket.upcoming)}</span>
                         </div>
                     </div>
-                    <div className=" position-absolute left-0 right-0 bottom-0 top-0 bg-light opacity-75 h-25 p-1 d-flex justify-content-between align-items-center">
+                    <div className=" position-absolute left-0 right-0 bottom-0 bg-light opacity-75 h-25 p-1 d-flex justify-content-between align-items-center">
                         <span className="text-danger d-block">{failure?.reason}</span>
                         <span className="text-success d-bloc">{success} Green</span>
                         {rocket ? (
