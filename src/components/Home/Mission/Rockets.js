@@ -21,7 +21,7 @@ function Rockets({ rocket }) {
                         alt="Rocket"
                     />
                     <div className="card-body position-absolute left-0 right-0 bottom-10 top-2 bg-light opacity-75 d-flex justify-content-between gap-2">
-                        <div className="rocket_con w-75 lh-lg">
+                        <div className="rocket_con w-75 lh-base">
                             <h5 className="text-primary">Name: {rocketName?.rocket_name}</h5>
                             <span>{rocketName?.rocket_type}</span> <br />
                             <span className="text-black-50">{rocketDetails}</span> <br />

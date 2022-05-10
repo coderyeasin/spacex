@@ -5,7 +5,7 @@ import Rockets from './Rockets';
 
 function Mission() {
     const [display, setDisplay] = useState([]);
-    // const [loading, setLoading] = useState(true)
+    const [loading, setIsLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [pageCount] = useState(9);
     const dispatch = useDispatch();
@@ -13,7 +13,8 @@ function Mission() {
     // data load
     useEffect(() => {
         dispatch(fetchSpacex());
-    }, [dispatch, pageCount]);
+        setIsLoading(false);
+    }, [dispatch, page]);
 
     const mission = useSelector((state) => state.spaceReducer.launch);
     const launch = mission.slice(0, 9);
@@ -36,16 +37,25 @@ function Mission() {
     // upcoming
     const handleLatest = (e) => {
         console.log(e.target.value);
+        const recent = mission.map((item) => item.upcoming === e.target.value);
+        // setPage(recent);
+        setDisplay(recent);
+        console.log(recent);
     };
     // launch Date
     const lastYear = (e) => {
-        const preYear = e.target.value;
-        // const filterYear = mission.filter((name) => name.launch_year);
+        const years = e.target.value;
+        const preYear = mission.map((item) => item?.launch_year === years);
+        setDisplay(preYear);
         console.log(preYear);
     };
     // Status
     const handleStatus = (e) => {
         console.log(e.target.value);
+        const recent = mission.map((item) => item?.upcoming === e.target.value);
+        // setPage(recent);
+        setDisplay(recent);
+        console.log(recent);
     };
     // Get Current Posts
     const indexOfLastPost = page * pageCount;
@@ -91,12 +101,22 @@ function Mission() {
                     <option value="Success">Success</option>
                 </select>
             </div>
-
-            <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
-                {page
-                    ? display.map((rocket) => <Rockets key={rocket.id} rocket={rocket} />)
-                    : currentPost.map((rocket) => <Rockets key={rocket.id} rocket={rocket} />)}
-            </div>
+            {loading && (
+                <div className="spinner-border text-danger text-center" role="status">
+                    <span className="visually-hidden ">Loading...</span>
+                </div>
+            )}
+            {!loading && (
+                <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
+                    {!page
+                        ? display.map((rocket) => (
+                              <Rockets key={rocket.flight_number} rocket={rocket} />
+                          ))
+                        : currentPost.map((rocket) => (
+                              <Rockets key={rocket.flight_number} rocket={rocket} />
+                          ))}
+                </div>
+            )}
 
             {/* pagination */}
             <div className="d-flex justify-content-center align-items-center text-center my-5">
