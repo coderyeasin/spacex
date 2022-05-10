@@ -5,6 +5,7 @@ import Rockets from './Rockets';
 
 function Mission() {
     const [display, setDisplay] = useState([]);
+    // const [loading, setLoading] = useState(true)
     const [page, setPage] = useState(1);
     const [pageCount] = useState(9);
     const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function Mission() {
     // data load
     useEffect(() => {
         dispatch(fetchSpacex());
-    }, [dispatch]);
+    }, [dispatch, pageCount]);
 
     const mission = useSelector((state) => state.spaceReducer.launch);
     const launch = mission.slice(0, 9);
@@ -25,6 +26,7 @@ function Mission() {
             name.rocket.rocket_name.toLowerCase().includes(searchText.toLowerCase())
         );
         setDisplay(search);
+        setPage(search);
         console.log(search);
     };
     console.log(display);
@@ -32,7 +34,9 @@ function Mission() {
     // Filtering
 
     // upcoming
-
+    const handleLatest = (e) => {
+        console.log(e.target.value);
+    };
     // launch Date
     const lastYear = (e) => {
         const preYear = e.target.value;
@@ -40,7 +44,9 @@ function Mission() {
         console.log(preYear);
     };
     // Status
-
+    const handleStatus = (e) => {
+        console.log(e.target.value);
+    };
     // Get Current Posts
     const indexOfLastPost = page * pageCount;
     const indexOfFirstPost = indexOfLastPost - pageCount;
@@ -69,7 +75,7 @@ function Mission() {
             </form>
             {display && <p>Search Result by Name : {display.length}</p>}
             <div className="my-3 d-flex justify-content-between align-items-center my-5">
-                <select name="" id="">
+                <select name="" id="" onClick={handleLatest}>
                     <option value="Select">Select</option>
                     <option value="Upcoming">Upcoming</option>
                 </select>
@@ -79,17 +85,17 @@ function Mission() {
                     <option value="Last Month">Last Month</option>
                     <option value="Last Year">Last Year</option>
                 </select>
-                <select name="" id="">
-                    <option value="Select">Status</option>
+                <select name="" id="" onClick={handleStatus}>
+                    <option value="Status">Status</option>
                     <option value="Failure">Failure</option>
                     <option value="Success">Success</option>
                 </select>
             </div>
 
             <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
-                {currentPost.map((rocket) => (
-                    <Rockets key={rocket.id} rocket={rocket} />
-                ))}
+                {page
+                    ? display.map((rocket) => <Rockets key={rocket.id} rocket={rocket} />)
+                    : currentPost.map((rocket) => <Rockets key={rocket.id} rocket={rocket} />)}
             </div>
 
             {/* pagination */}
