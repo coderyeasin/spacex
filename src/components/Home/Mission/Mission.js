@@ -34,6 +34,7 @@ function Mission() {
 
     // launch Date
     const lastYear = () => {
+        // const preYear = e.target.value;
         const launchYear = mission.filter((name) => name.launch_year);
         console.log(launchYear);
     };
@@ -71,9 +72,8 @@ function Mission() {
                     <option value="Select">Select</option>
                     <option value="Upcoming">Upcoming</option>
                 </select>
-                <select name="" id="" value="Launch Date" onClick={lastYear}>
-                    <option value="Launch Date">Launch Date</option>
-                    <option value="Last Week">Last Week</option>
+                <select name="" id="" value="Launch Date" onChange={lastYear}>
+                    <option value="Upcoming">Last Week</option>
                     <option value="Last Month">Last Month</option>
                     <option value="Last Year">Last Year</option>
                 </select>
@@ -91,7 +91,7 @@ function Mission() {
             </div>
 
             {/* pagination */}
-            <div className="d-flex justify-content-center align-items-center text-center">
+            <div className="d-flex justify-content-center align-items-center text-center my-5">
                 {pageNumbers.map((number) => (
                     <button
                         type="button"
