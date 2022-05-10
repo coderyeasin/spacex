@@ -1,25 +1,58 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpacex } from '../../../redux/slices/spacexSlice';
 import Rockets from './Rockets';
 
 function Mission() {
+    const [display, setDisplay] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageCount] = useState(9);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchSpacex());
-    }, [dispatch]);
+    }, [dispatch, display]);
 
     const mission = useSelector((state) => state.spaceReducer.launch);
     const launch = mission.slice(0, 9);
+    console.log(launch);
 
-    const failure = mission.map((e) => e.launch_failure_details).slice(0, 9);
-    const { reason } = failure;
-    console.log(reason);
-
-    console.log(mission.slice(0, 9));
+    // Search Implement
     const handleRocket = (e) => {
-        console.log(e.target.value);
+        const searchText = e.target.value;
+        const search = mission.filter((name) =>
+            name.rocket.rocket_name.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setDisplay(search);
+        console.log(search);
+    };
+    console.log(display);
+
+    // Filtering
+
+    // upcoming
+
+    // launch Date
+    const lastYear = (e) => {
+        const preValue = e.target.value;
+        console.log(preValue);
+    };
+    // Status
+
+    // Get Current Posts
+    const indexOfLastPost = page * pageCount;
+    const indexOfFirstPost = indexOfLastPost - pageCount;
+    const currentPost = mission.slice(indexOfFirstPost, indexOfLastPost);
+
+    // pagination
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(mission.length / pageCount); i += 1) {
+        pageNumbers.push(i);
+    }
+
+    // change page
+    const paginate = (pageNumber) => {
+        setPage(pageNumber);
     };
     return (
         <div className="container my-5">
@@ -31,21 +64,17 @@ function Mission() {
                     placeholder="Search by Rocket Name"
                     aria-label="Search"
                 />
-                <button className="btn btn-outline-success" type="submit">
-                    Search
-                </button>
             </form>
+            {display && <p>Search Result by Name : {display.length}</p>}
             <div className="my-3 d-flex justify-content-between align-items-center my-5">
-                <nav>
-                    <li type="square">
-                        <a href="www.google.com">Upcoming</a>
-                    </li>
-                </nav>
                 <select name="" id="">
-                    <option value="Select">Launch Date</option>
-                    <option value="Upcoming">Week</option>
-                    <option value="Select">Month</option>
-                    <option value="Select">Year</option>
+                    <option value="Select">Select</option>
+                    <option value="Upcoming">Upcoming</option>
+                </select>
+                <select name="" id="" value="Launch Date" onChange={lastYear}>
+                    <option value="Upcoming">Last Week</option>
+                    <option value="Select">Last Month</option>
+                    <option value="Select">Last Year</option>
                 </select>
                 <select name="" id="">
                     <option value="Select">Status</option>
@@ -55,8 +84,22 @@ function Mission() {
             </div>
 
             <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
-                {launch.map((rocket) => (
-                    <Rockets key={rocket.id} rocket={rocket} failure={failure} />
+                {currentPost.map((rocket) => (
+                    <Rockets key={rocket.mission_id} rocket={rocket} />
+                ))}
+            </div>
+
+            {/* pagination */}
+            <div className="d-flex justify-content-center align-items-center text-center">
+                {pageNumbers.map((number) => (
+                    <button
+                        type="button"
+                        key={number}
+                        onClick={() => paginate(number)}
+                        className="text-info bg-white-50 px-3 mx-1 border"
+                    >
+                        {number}
+                    </button>
                 ))}
             </div>
         </div>
