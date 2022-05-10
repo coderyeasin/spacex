@@ -16,7 +16,7 @@ function Rockets({ rocket }) {
             <div className="col ">
                 <div className="card h-100 position-relative p-2">
                     <img
-                        src={image.mission_patch_small}
+                        src={image?.mission_patch_small || image?.mission_patch}
                         className="card-img-top img-fluid w-75 mx-auto"
                         alt="Rocket"
                     />
