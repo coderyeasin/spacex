@@ -4,6 +4,7 @@ import { fetchSpacex, recentYear, status, upcoming } from '../../../redux/slices
 import Rockets from './Rockets';
 
 function Mission() {
+    const [loading, setLoading] = useState(true);
     const [display, setDisplay] = useState([]);
     const [page, setPage] = useState(1);
     const [pageCount] = useState(9);
@@ -12,6 +13,12 @@ function Mission() {
     // data load
     useEffect(() => {
         dispatch(fetchSpacex());
+        if (fetchSpacex.pending) {
+            setLoading(true);
+        }
+        if (fetchSpacex.fulfilled) {
+            setLoading(false);
+        }
     }, [dispatch]);
     const mission = useSelector((state) => state.spaceReducer.launch);
     const recentStatus = useSelector((state) => state.spaceReducer.upcoming);
@@ -19,22 +26,18 @@ function Mission() {
     const rocketStatus = useSelector((state) => state.spaceReducer.rocketStatus);
 
     useEffect(() => {
-        // setIsLoading(false);
         setDisplay(mission);
     }, [mission]);
 
     useEffect(() => {
-        // setIsLoading(false);
         setDisplay(recentStatus);
     }, [recentStatus]);
 
     useEffect(() => {
-        // setIsLoading(false);
         setDisplay(rocketStatus);
     }, [rocketStatus]);
 
     useEffect(() => {
-        // setIsLoading(false);
         // setDisplay(launchDate);
         console.log(launchDate);
     }, [launchDate]);
@@ -108,12 +111,12 @@ function Mission() {
                     <option value="false">Failure</option>
                 </select>
             </div>
-            {!fetchSpacex.fulfilled && (
+            {loading && (
                 <div className="spinner-border text-danger text-center" role="status">
                     <span className="visually-hidden ">Loading...</span>
                 </div>
             )}
-            {fetchSpacex.fulfilled && (
+            {!loading && (
                 <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
                     {currentPost.map((rocket) => (
                         <Rockets key={rocket?.flight_number} rocket={rocket} />
