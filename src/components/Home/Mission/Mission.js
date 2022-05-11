@@ -5,7 +5,6 @@ import Rockets from './Rockets';
 
 function Mission() {
     const [display, setDisplay] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [pageCount] = useState(9);
     const dispatch = useDispatch();
@@ -20,22 +19,22 @@ function Mission() {
     const rocketStatus = useSelector((state) => state.spaceReducer.rocketStatus);
 
     useEffect(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
         setDisplay(mission);
     }, [mission]);
 
     useEffect(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
         setDisplay(recentStatus);
     }, [recentStatus]);
 
     useEffect(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
         setDisplay(rocketStatus);
     }, [rocketStatus]);
 
     useEffect(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
         // setDisplay(launchDate);
         console.log(launchDate);
     }, [launchDate]);
@@ -109,12 +108,12 @@ function Mission() {
                     <option value="false">Failure</option>
                 </select>
             </div>
-            {isLoading && (
+            {!fetchSpacex.fulfilled && (
                 <div className="spinner-border text-danger text-center" role="status">
                     <span className="visually-hidden ">Loading...</span>
                 </div>
             )}
-            {!isLoading && (
+            {fetchSpacex.fulfilled && (
                 <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
                     {currentPost.map((rocket) => (
                         <Rockets key={rocket?.flight_number} rocket={rocket} />
