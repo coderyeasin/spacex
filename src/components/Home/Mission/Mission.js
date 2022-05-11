@@ -16,15 +16,12 @@ function Mission() {
     }, [dispatch]);
     const mission = useSelector((state) => state.spaceReducer.launch);
     const recentStatus = useSelector((state) => state.spaceReducer.upcoming);
-    // const lastYear = useSelector((state) => state.spaceReducer.year);
+    const launchDate = useSelector((state) => state.spaceReducer.launchDate);
     const rocketStatus = useSelector((state) => state.spaceReducer.rocketStatus);
 
     useEffect(() => {
         setIsLoading(false);
         setDisplay(mission);
-        // setDisplay(recentStatus);
-        // setDisplay(lastYear);
-        // setDisplay(rocketStatus);
     }, [mission]);
 
     useEffect(() => {
@@ -36,6 +33,12 @@ function Mission() {
         setIsLoading(false);
         setDisplay(rocketStatus);
     }, [rocketStatus]);
+
+    useEffect(() => {
+        setIsLoading(false);
+        // setDisplay(launchDate);
+        console.log(launchDate);
+    }, [launchDate]);
 
     // Search Implement
     const handleRocket = (e) => {
@@ -88,7 +91,7 @@ function Mission() {
                     aria-label="Search"
                 />
             </form>
-            {display && <p>Search Result by Name : {display.length}</p>}
+            {display && <p>Rockets Found : {display.length}</p>}
             <div className="my-3 d-flex justify-content-between align-items-center my-5">
                 <select name="" id="" onClick={handleLatest}>
                     <option value="Select">Select</option>
@@ -103,8 +106,8 @@ function Mission() {
                 </select>
                 <select name="" id="" onClick={handleStatus}>
                     <option value="Status">Status</option>
-                    <option value="true">Failure</option>
-                    <option value="false">Success</option>
+                    <option value="true"> Success</option>
+                    <option value="false">Failure</option>
                 </select>
             </div>
             {isLoading && (
@@ -115,7 +118,7 @@ function Mission() {
             {!isLoading && (
                 <div className="row row-cols-3 row-cols-md-3 g-4 my-3">
                     {currentPost.map((rocket) => (
-                        <Rockets key={rocket.flight_number} rocket={rocket} />
+                        <Rockets key={rocket?.flight_number} rocket={rocket} />
                     ))}
                 </div>
             )}

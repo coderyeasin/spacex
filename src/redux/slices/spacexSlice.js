@@ -12,7 +12,7 @@ export const spacexSlice = createSlice({
     initialState: {
         launch: [],
         upcoming: [],
-        recentYear: [],
+        launchDate: [],
         rocketStatus: [],
         status: 'idle',
     },
@@ -31,32 +31,37 @@ export const spacexSlice = createSlice({
                 const latest = state;
                 latest.upcoming = recentStatus;
             }
-            // const recentStatus = state.launch.filter((e) => e.upcoming === action.payload);
-
-            // const hence = state;
-            // hence.recent = recentStatus;
-
-            // console.log(recentStatus);
         },
         recentYear: (state, action) => {
-            console.log(typeof action.payload);
-
-            const recentYear = state.launch.filter((e) => e);
-            console.log(recentYear.launch_year);
-
-            // const lastYear = state;
-            // lastYear.year = recentYear;
+            if (action.payload === String('lastWeek')) {
+                const lastWeek = state.launch.map((e) => e.launch_date_utc);
+                const launchDay = lastWeek.toString().slice(8, 10);
+                const week = state;
+                week.launchDate = launchDay;
+            }
+            if (action.payload === 'lastMonth') {
+                const lastMonth = state.launch.map((e) => e.launch_date_utc);
+                const launchMonth = lastMonth.toString().slice(5, 7);
+                const week = state;
+                week.launchDate = launchMonth;
+            }
+            if (action.payload === 'lastYear') {
+                const lastYear = state.launch.map((e) => e.launch_date_utc);
+                const launchYear = lastYear.toString().slice(0, 4);
+                const week = state;
+                week.launchDate = launchYear;
+            }
         },
         status: (state, action) => {
             console.log(typeof action.payload);
-            if (action.payload === String(false)) {
-                const launchStatus = state.launch.filter((e) => e.launch_success === false);
+            if (action.payload === String(true)) {
+                const launchStatus = state.launch.filter((e) => e.launch_success === true);
 
                 const newStatus = state;
                 newStatus.rocketStatus = launchStatus;
             }
-            if (action.payload === String(true)) {
-                const launchStatus = state.launch.filter((e) => e.launch_success === true);
+            if (action.payload === String(false)) {
+                const launchStatus = state.launch.filter((e) => e.launch_success === false);
 
                 const newStatus = state;
                 newStatus.rocketStatus = launchStatus;
