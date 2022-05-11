@@ -18,7 +18,6 @@ export const spacexSlice = createSlice({
     },
     reducers: {
         upcoming: (state, action) => {
-            console.log(typeof action.payload);
             if (action.payload === String(true)) {
                 const recentStatus = state.launch.filter((e) => e.upcoming === true);
 
@@ -53,7 +52,6 @@ export const spacexSlice = createSlice({
             }
         },
         status: (state, action) => {
-            console.log(typeof action.payload);
             if (action.payload === String(true)) {
                 const launchStatus = state.launch.filter((e) => e.launch_success === true);
 

@@ -1,18 +1,14 @@
 import React from 'react';
 
 function Rockets({ rocket }) {
-    // console.log(rocket);
-
     const launchTime = new Date(rocket?.launch_date_utc);
-    console.log(rocket?.launch_date_utc);
-    console.log(rocket?.static_fire_date_utc);
     const success = rocket?.launch_success;
     const failure = rocket?.launch_failure_details;
     const fireTime = new Date(rocket?.static_fire_date_utc);
     const image = rocket?.links;
     const rocketName = rocket?.rocket;
 
-    const rocketDetails = rocket.details?.slice(0, 50);
+    const rocketDetails = rocket?.details?.slice(0, 50);
     return (
         <div>
             <div className="col ">

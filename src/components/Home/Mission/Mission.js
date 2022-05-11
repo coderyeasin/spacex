@@ -47,7 +47,6 @@ function Mission() {
             name.rocket.rocket_name.toLowerCase().includes(searchText.toLowerCase())
         );
         setDisplay(search);
-        console.log(search);
     };
 
     // Filtering
