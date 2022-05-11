@@ -4,14 +4,12 @@ In the project directory, you can run:
 
 ## Installation
 
----
-
 A little intro about the installation.
 
-$ git clone https://github.com/coderyeasin/spacex.git
-$ cd ../path/to/the/file
-$ yarn install
-$ yarn start
+<li>$ git clone https://github.com/coderyeasin/spacex.git</li> <br />
+<li>$ cd ../path/to/the/file</li><br />
+<li>$ yarn install</li><br />
+<li>$ yarn start</li>
 
 ```
 Note: This project about spaceX rocket to lunch
@@ -23,5 +21,5 @@ A list of technologies used within the project:
 * Redux Toolkit
 * Bootstrap 5
 
-### [Live](http://localhost:3000)
 ```
+### [Live](https://brilliant-strudel-f09329.netlify.app/)
