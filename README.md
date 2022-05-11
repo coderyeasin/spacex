@@ -1,14 +1,14 @@
 ## Follow this Instructions:
 
 In the project directory, you can run:
-
+### [Live](https://brilliant-strudel-f09329.netlify.app/)
 ## Installation
 
 A little intro about the installation.
 
-<li>$ git clone https://github.com/coderyeasin/spacex.git</li> <br />
-<li>$ cd ../path/to/the/file</li><br />
-<li>$ yarn install</li><br />
+<li>$ git clone https://github.com/coderyeasin/spacex.git</li>
+<li>$ cd ../path/to/the/file</li>
+<li>$ yarn install</li>
 <li>$ yarn start</li>
 
 ```
@@ -22,4 +22,3 @@ A list of technologies used within the project:
 * Bootstrap 5
 
 ```
-### [Live](https://brilliant-strudel-f09329.netlify.app/)
