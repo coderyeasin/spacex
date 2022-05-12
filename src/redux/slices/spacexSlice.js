@@ -33,22 +33,23 @@ export const spacexSlice = createSlice({
         },
         recentYear: (state, action) => {
             if (action.payload === String('lastWeek')) {
-                const lastWeek = state.launch.map((e) => e.launch_date_utc);
-                const launchDay = lastWeek.toString().slice(8, 10);
+                const lastWeek = state.launch.filter((e) => e.launch_date_utc.slice(9, 13) <= '30');
                 const week = state;
-                week.launchDate = launchDay;
+                week.launchDate = lastWeek;
             }
             if (action.payload === 'lastMonth') {
-                const lastMonth = state.launch.map((e) => e.launch_date_utc);
-                const launchMonth = lastMonth.toString().slice(5, 7);
+                const launchMonth = state.launch.filter(
+                    (e) => e.launch_date_utc.slice(5, 7) <= '04'
+                );
                 const week = state;
                 week.launchDate = launchMonth;
             }
             if (action.payload === 'lastYear') {
-                const lastYear = state.launch.map((e) => e.launch_date_utc);
-                const launchYear = lastYear.toString().slice(0, 4);
+                const lastYear = state.launch.filter(
+                    (e) => e.launch_date_utc.slice(0, 4) === '2020'
+                );
                 const week = state;
-                week.launchDate = launchYear;
+                week.launchDate = lastYear;
             }
         },
         status: (state, action) => {

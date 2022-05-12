@@ -38,8 +38,7 @@ function Mission() {
     }, [rocketStatus]);
 
     useEffect(() => {
-        // setDisplay(launchDate);
-        console.log(launchDate);
+        setDisplay(launchDate);
     }, [launchDate]);
 
     // Search Implement
